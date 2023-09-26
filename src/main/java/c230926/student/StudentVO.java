@@ -48,5 +48,4 @@ public class StudentVO {
 	public String getGitAddress() {
 		return gitAddress;
 	}
-
 }

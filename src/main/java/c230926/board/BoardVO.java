@@ -35,6 +35,4 @@ public class BoardVO {
 	public String getDate() {
 		return date;
 	}
-
-	
 }

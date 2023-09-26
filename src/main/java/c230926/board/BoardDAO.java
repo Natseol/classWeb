@@ -10,7 +10,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-import c230926.student.StudentVO;
 
 public class BoardDAO {
 	private Connection con;
@@ -52,6 +51,41 @@ public class BoardDAO {
 			pstmt.setString(1, name);
 			pstmt.setString(2, subject);
 			pstmt.setString(3, text);
+			pstmt.executeUpdate();
+
+			pstmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteBoard(int id) {
+		try {
+			connect();
+			
+			String insertQuery = "delete from board where id=?";
+			PreparedStatement pstmt = con.prepareStatement(insertQuery);
+			pstmt.setInt(1, id);
+			pstmt.executeUpdate();
+
+			pstmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateBoard(String name, String subject, String text, int id) {
+		try {
+			connect();
+			
+			String insertQuery = "update board set name=?, subject=?, text=? where id=?";
+			PreparedStatement pstmt = con.prepareStatement(insertQuery);
+			pstmt.setString(1, name);
+			pstmt.setString(2, subject);
+			pstmt.setString(3, text);
+			pstmt.setInt(4, id);
 			pstmt.executeUpdate();
 
 			pstmt.close();

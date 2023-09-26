@@ -39,6 +39,12 @@ public class NewServ extends HttpServlet {
 		html +="<head>";
 		html +="<meta charset='UTF-8' />";
 		html +="<title>새 글 작성</title>";
+		html +="<style>";
+		html +=".text {";
+		html +="width:400px;";
+		html +="height:700px;";
+		html +="}";
+		html +="</style>";
 		html +="</head>";
 		html +="<body>";
 		html +="<form action='new' method='post'>";
@@ -58,11 +64,13 @@ public class NewServ extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
 		String boardName = request.getParameter("board-name");
 		String boardSubject = request.getParameter("board-subject");
 		String boardText = request.getParameter("board-text");
 		BoardDAO dao = new BoardDAO();
 		dao.setBoard(boardName, boardSubject, boardText);
+		System.out.println("새글 작성");
 		response.sendRedirect("./board");
 	}
 

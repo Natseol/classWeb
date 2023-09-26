@@ -1,6 +1,8 @@
 package c230926.board;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,9 +27,38 @@ public class TextServ extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		System.out.println("수정");
+		
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
+		BoardDAO dao = new BoardDAO();
+		
+		BoardVO vo = dao.getBoard(Integer.parseInt(request.getParameter("id")));
+		
+		String html = "<html>";
+		html +="<head>";
+		html +="<meta charset='UTF-8' />";
+		html +="<title>게시판</title>";
+		html +="<style>";
+		html +=".text {";
+		html +="width:400px;";
+		html +="height:700px;";
+		html +="}";
+		html +="</style>";
+		html +="</head>";
+		html +="<body>";
+		html += "<form action='./text?id="+vo.getId()+"' method='post'>"; 
+		html +="작성자 <input type='text' name='board-name' placeholder='"+vo.getName()+"' /><br>";
+		html +="제목 <input type='text' name='board-subject' placeholder='"+vo.getSubject()+"' /><br>";
+		html +="<input type='text' class='text' name='board-text' placeholder='"+vo.getText()+"' /><br>";
+		html +="<button>변경</button>";
+		html +="</form>";
+		html +="</body>";
+		html +="</html>";
+		response.getWriter().append(html);		
 	}
 
 	/**
@@ -35,7 +66,15 @@ public class TextServ extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		String boardName = request.getParameter("board-name");
+		String boardSubject = request.getParameter("board-subject");
+		String boardText = request.getParameter("board-text");
+		BoardDAO dao = new BoardDAO();
+		dao.updateBoard(boardName, boardSubject, boardText, Integer.parseInt(request.getParameter("id")));
+		System.out.println("업데이트");
+		response.sendRedirect("./board");
 	}
 
 }

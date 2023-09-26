@@ -70,16 +70,17 @@ public class BoardServ extends HttpServlet {
 				html +=list.get(i).getDate();
 				html +="<br>";
 			}
-			html +="<a href='./new'><button>글 수정</button></a>";
-			html +="<a href='./new'><button>글 삭제</button></a>";
+			html +="<a href='./new'><button>새 글 작성</button></a>";
 		} else {
-			 
-			html += "<div>";
-			html += "작성자:"+vo.getName()+"<br>";
-			html += "제목:"+vo.getSubject()+"<br>";
-			html += vo.getText()+"<br>";
-			html += "<a href='./board'><button>글삭제</button></a>";
-			html += "</div>";
+				html += "<div>";
+				html += "작성자:"+vo.getName()+"<br>";
+				html += "제목:"+vo.getSubject()+"<br>";
+				html += vo.getText()+"<br>";
+				html +="<a href='./text?id="+vo.getId()+"'>"+"<button>글 수정</button></a>";			
+				html += "</div>";
+				html += "<form action='./board?id="+vo.getId()+"' method='post'>"; 
+				html += "<a><button>글 삭제</button></a>";
+				html += "</form>";
 		}
 		html +="</body>";
 		html +="</html>";
@@ -91,6 +92,12 @@ public class BoardServ extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		BoardDAO dao = new BoardDAO();
+		int boardId = Integer.parseInt(request.getParameter("id"));
+		dao.deleteBoard(boardId);
+		response.sendRedirect("./board");
 
 	}
 
