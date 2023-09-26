@@ -1,6 +1,7 @@
 package c230926.student;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -52,6 +53,28 @@ public class StudentDAO {
 //				"qwer"
 //				);
 //	}
+	public void setStudent(String name, String studentId, String studentPw, int age, String gitAddress) {
+
+		try {
+			connect();
+			
+			String insertQuery = "insert into student2 (name, student_id, student_pw, age, git) values (?,?,?,?,?)";
+			PreparedStatement pstmt = con.prepareStatement(insertQuery);
+			pstmt.setString(1, name);
+			pstmt.setString(2, studentId);
+			pstmt.setString(3, studentPw);
+			pstmt.setInt(4, age);
+			pstmt.setString(5, gitAddress);
+			pstmt.executeUpdate();
+
+			pstmt.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public StudentVO getStudent(String studentId, String studentPw) {
 		StudentVO temp = null;
 		try {
@@ -108,7 +131,6 @@ public class StudentDAO {
 		}
 		return temp;	
 	}
-	
 
 	private void connect() throws Exception{
 		Context ctx = new InitialContext();

@@ -62,6 +62,10 @@ public class Student extends HttpServlet {
 			html +="<input type='password' name='student-pw' placeholder='PASSWORD' />";
 			html +="<button>로그인</button>";
 			html +="</form>";
+			html +="<a href='./join'><button>회원가입</button></a>";
+//			html +="<form action='join' method='get'>";
+//			html +="<button>회원가입</button>";
+//			html +="</form>";
 			html +="<ol>";
 			for(int i = 0; i < list.size(); i++) {
 				html +="<li>";
@@ -101,9 +105,7 @@ public class Student extends HttpServlet {
 		 }
 		 else {
 			 response.sendRedirect("student");
-			 
 		 }
-//		response.getWriter().append("testing");
 	}
 
 }
